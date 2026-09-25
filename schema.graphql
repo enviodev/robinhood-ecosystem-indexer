@@ -1,0 +1,59 @@
+# A Uniswap v4 pool, keyed by its pool ID. Pools created before the start
+# block are created on their first swap, without the Initialize details.
+type Pool {
+  id: ID!
+  currency0: String
+  currency1: String
+  fee: Int
+  tickSpacing: Int
+  hooks: String
+  swapCount: BigInt!
+}
+
+type Swap {
+  id: ID!
+  pool: Pool!
+  sender: String! @index
+  amount0: BigInt!
+  amount1: BigInt!
+  fee: Int!
+  blockNumber: Int!
+  timestamp: Int!
+}
+
+# A steakUSDG deposit or withdrawal. Assets are USDG with 6 decimals.
+type VaultFlow {
+  id: ID!
+  kind: String! # "DEPOSIT" or "WITHDRAW"
+  sender: String!
+  onBehalf: String! @index
+  assets: BigInt!
+  shares: BigInt!
+  blockNumber: Int!
+  timestamp: Int!
+}
+
+# A token launched through the Pons V2 factory, keyed by token address.
+type Launch {
+  id: ID!
+  curve: String!
+  deployer: String! @index
+  pairToken: String!
+  launchedAt: Int!
+  graduated: Boolean!
+  graduatedAt: Int
+  positionId: BigInt
+}
+
+# An Across transfer seen from Robinhood Chain. OUT is a deposit leaving the
+# chain, IN is a relayer filling a transfer arriving on it.
+type BridgeTransfer {
+  id: ID!
+  direction: String! # "OUT" or "IN"
+  depositId: BigInt!
+  otherChainId: BigInt!
+  inputAmount: BigInt!
+  outputAmount: BigInt!
+  blockNumber: Int!
+  timestamp: Int!
+}

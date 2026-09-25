@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: robinhood-ecosystem-indexer
+description: Uniswap v4 swaps, steakUSDG vault flows, Pons launches and Across bridge traffic on Robinhood Chain
+contracts:
+  - name: UniswapV4PoolManager
+    events:
+      - event: Initialize(bytes32 indexed id, address indexed currency0, address indexed currency1, uint24 fee, int24 tickSpacing, address hooks, uint160 sqrtPriceX96, int24 tick)
+      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
+  - name: SteakUSDG
+    events:
+      - event: Deposit(address indexed sender, address indexed onBehalf, uint256 assets, uint256 shares)
+      - event: Withdraw(address indexed sender, address indexed receiver, address indexed onBehalf, uint256 assets, uint256 shares)
+  - name: PonsV2LaunchFactory
+    events:
+      - event: TokenLaunched(address indexed token, address indexed curve, address indexed deployer, address pairToken, uint256 launchConfigId, uint256 graduationThreshold)
+      - event: PoolGraduated(address indexed token, uint256 positionId, uint256 tokenAmount, uint256 pairTokenAmount)
+  - name: AcrossSpokePool
+    events:
+      - event: FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)
+      - event: FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32,bytes32,uint256,uint8) relayExecutionInfo)
+chains:
+  - id: 4663 # Robinhood Chain
+    # Uniswap v4 alone emits millions of events a week, so this starts from
+    # the chain head. Set a block number instead to backfill history.
+    start_block: latest
+    contracts:
+      - name: UniswapV4PoolManager
+        address:
+          - "0x8366a39cc670b4001a1121b8f6a443a643e40951"
+      - name: SteakUSDG
+        address:
+          - "0xBeEff033F34C046626B8D0A041844C5d1A5409dd"
+      - name: PonsV2LaunchFactory
+        address:
+          - "0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e"
+      - name: AcrossSpokePool
+        address:
+          - "0xD29C85F15DF544bA632C9E25829fd29d767d7978"
