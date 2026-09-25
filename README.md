@@ -9,7 +9,7 @@ An [Envio HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) indexer f
 | Pons | V2 launch factory `0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e` | Token launches, and when each graduates from its bonding curve |
 | Across | SpokePool `0xD29C85F15DF544bA632C9E25829fd29d767d7978` | Transfers leaving Robinhood Chain (`OUT`) and arriving on it (`IN`) |
 
-It goes with the blog [Robinhood Chain Ecosystem: Live Apps Verified Onchain](https://docs.envio.dev/blog/robinhood-chain-ecosystem).
+It goes with the blog [Robinhood Chain Ecosystem: Live Apps and How to Index Them](https://docs.envio.dev/blog/robinhood-chain-ecosystem).
 
 ## Requirements
 
